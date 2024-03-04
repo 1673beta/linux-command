@@ -1,7 +1,7 @@
 apt
 ===
 
-Debian系のディストリビューションにおけるパッケージ管理システムである。  
+Debian系のディストリビューションにおけるパッケージ管理システム 
 ~~This APT has Super Cow Powers.~~
 
 ## 補足説明

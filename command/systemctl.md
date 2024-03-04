@@ -1,47 +1,63 @@
 systemctl
 ===
 
-系统服务管理器指令
+systemdのserviceを管理するコマンド
 
 ## 补充说明
 
-**systemctl命令** 是系统服务管理器指令，它实际上将 service 和 chkconfig 这两个命令组合到一起。
+**systemctl**はsystemdを管理するコマンドで、`service`と`chkconfig`が組み合わさったものです。
 
 | 任务 | 旧指令 | 新指令 |
 | ---- | ---- | ---- |
-| 使某服务自动启动 | chkconfig --level 3 httpd on | systemctl enable httpd.service |
-| 使某服务不自动启动 | chkconfig --level 3 httpd off | systemctl disable httpd.service |
-| 检查服务状态 | service httpd status | systemctl status httpd.service （服务详细信息） systemctl is-active httpd.service （仅显示是否 Active) |
-| 显示所有已启动的服务 | chkconfig --list | systemctl list-units --type=service |
-| 启动服务 | service httpd start | systemctl start httpd.service |
-| 停止服务 | service httpd stop | systemctl stop httpd.service |
-| 重启服务 | service httpd restart | systemctl restart httpd.service |
-| 重载服务 | service httpd reload | systemctl reload httpd.service |
+| 自動起動を有効 | chkconfig --level 3 httpd on | systemctl enable httpd.service |
+| 自動起動を無効 | chkconfig --level 3 httpd off | systemctl disable httpd.service |
+| サービスの状態確認 | service httpd status | systemctl status httpd.service （詳細情報）<br> systemctl is-active httpd.service （activeか否か) |
+| 起動しているサービスを確認 | chkconfig --list | systemctl list-units --type=service |
+| 全てのサービスを確認 | chkconfig --list | systemctl list-unit-files --all|
+| サービスを起動 | service httpd start | systemctl start httpd.service |
+| サービスを停止 | service httpd stop | systemctl stop httpd.service |
+| サービスを再起動 | service httpd restart | systemctl restart httpd.service |
+| サービスを再読み込み | service httpd reload | systemctl reload httpd.service |
 
-### 实例
+### 実例
 
 ```shell
-systemctl start nfs-server.service . # 启动nfs服务
-systemctl enable nfs-server.service # 设置开机自启动
-systemctl disable nfs-server.service # 停止开机自启动
-systemctl status nfs-server.service # 查看服务当前状态
-systemctl restart nfs-server.service # 重新启动某服务
-systemctl list-units --type=service # 查看所有已启动的服务
+systemctl start nfs-server.service . # nfsサービスを起動
+systemctl enable nfs-server.service # サービスが自動起動するように設定
+systemctl disable nfs-server.service # サービスが自動起動しないように設定
+systemctl status nfs-server.service # サービスの状態を確認
+systemctl restart nfs-server.service # サービスを再起動
+systemctl list-units --type=service # 既に起動しているサービスの一覧を確認
 ```
 
-开启防火墙22端口
-
+#### ファイヤーウォールの22番ポートを開く
+##### iptables
 ```shell
 iptables -I INPUT -p tcp --dport 22 -j accept
 ```
+##### firewalld
+```shell
+firewall-cmd --add-port=22/tcp --zone=public --permanent
+```
 
-如果仍然有问题，就可能是SELinux导致的
+それでもまだ問題がある場合、SELinuxが原因である場合があります。
+以下の手順で確認してみてください。
 
-关闭SElinux：
+SELinuxの状態を確認する：
+```shell
+getenforce
+```
 
-修改`/etc/selinux/config`文件中的`SELINUX=""`为disabled，然后重启。
+SELinuxの状態を一時的に変更する：
+```shell
+setenforce 0 # 一時的にPermissiveにする
+```
 
-彻底关闭防火墙：
+SElinuxをオフにする：
+
+`/etc/selinux/config`中の`SELINUX=""`をdisabledにし，再起動する。
+
+ファイヤーウォールを完全に停止する：
 
 ```shell
 sudo systemctl status firewalld.service

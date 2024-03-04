@@ -1,9 +1,9 @@
 apk
 ===
 
-Alpine Linux 下的包管理工具
+Alpine Linuxにおけるパッケージ管理ツール
 
-## 使用实例
+## 実例
 
 ```shell
 apk install xxx
@@ -14,9 +14,10 @@ apk show # list local package
 apk del openssh openntp vim
 ```
 
-### 升级
+### アップグレード
 
-upgrade命令升级系统已安装的所以软件包（一般包括内核），当然也可指定仅升级部分软件包（通过-u或–upgrade选择指定）。
+upgradeコマンドはシステムに既にインストールされているカーネルを含む全てのパッケージをアップグレードします。
+`-u`オプションを使用することで指定したパッケージのみを更新することも可能です。
 
 ```shell
 apk update # 更新最新本地镜像源
@@ -24,7 +25,7 @@ apk upgrade # 升级软件
 apk add --upgrade busybox # 指定升级部分软件包
 ```
 
-### 搜索
+### 検索
 
 ```shell
 apk search # 查找所以可用软件包
@@ -33,9 +34,9 @@ apk search -v 'acf*' # 通过软件包名称查找软件包
 apk search -v -d 'docker' # 通过描述文件查找特定的软件包
 ```
 
-### 查看包信息
+### パッケージ情報を見る
 
-info命令用于显示软件包的信息。
+infoコマンドはパッケージに関する情報を表示します。
 
 ```shell
 apk info # 列出所有已安装的软件包
