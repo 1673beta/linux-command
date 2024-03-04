@@ -3,7 +3,7 @@ systemctl
 
 systemdのserviceを管理するコマンド
 
-## 补充说明
+## 補足説明
 
 **systemctl**はsystemdを管理するコマンドで、`service`と`chkconfig`が組み合わさったものです。
 
