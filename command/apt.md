@@ -2,11 +2,11 @@ apt
 ===
 
 Debian系のディストリビューションにおけるパッケージ管理システム 
-~~This APT has Super Cow Powers.~~
 
 ## 補足説明
 
 **apt**コマンドはDebian系ディストリビューションにおいてAPTソフトウェアパッケージを管理するツールです。**apt-get**や**apt-cache**などに比べよりインタラクティブです。
+~~This APT page has Super Cow Powers.~~
 
 ### 記法 
 
